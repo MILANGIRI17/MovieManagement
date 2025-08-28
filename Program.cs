@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using MovieManagement.Persistence;
+using MovieManagement.Services;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +14,9 @@ builder.Services.AddDbContext<MovieDbContext>(options =>
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
     options.UseNpgsql(connectionString);
 });
+
+// Register MovieService for dependency injection
+builder.Services.AddTransient<IMovieService, MovieService>();
 
 var app = builder.Build();
 
